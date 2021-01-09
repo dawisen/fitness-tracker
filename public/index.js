@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+
 init();
 
 async function init() {
@@ -12,8 +13,6 @@ async function init() {
     }
   }
 }
-
-
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/test", {
   useNewUrlParser: true,
