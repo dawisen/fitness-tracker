@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const path = require("path");
+const morgan = require("morgan");
 const app = express();
-const PORT = process.env.MONGODB_URI || 3000
+const PORT = process.env.PORT || 3000;
+
+// use Morgan to monitor HTTP requests made to our server
+app.use(morgan("tiny"));
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname + "./public/index.html"));
