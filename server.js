@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 //use Morgan to monitor HTTP requests made to our server
 app.use(morgan("tiny"));
 
-app.use(express.static("client"));
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

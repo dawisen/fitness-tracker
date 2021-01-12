@@ -2,36 +2,20 @@ const path = require("path");
 
 module.exports = (app) => {
   app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname + "/../public/index.html"));
+    res.sendFile(path.join(__dirname, "../public/index.html"));
   });
 
-  app.get("/all", (req, res) => {
-    db.animals.find({}, (err, found) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.json(found);
-      }
-    });
+  app.get("/stats", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/stats.html"));
   });
 
-  app.get("/name", (req, res) => {
-    db.animals.find().sort({ name: 1 }, (err, found) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.json(found);
-      }
-    });
+  app.get("/exercise", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/exercise.html"));
   });
 
-  app.get("/weight", (req, res) => {
-    db.animals.find().sort({ weight: -1 }, (err, found) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.json(found);
-      }
-    });
+  app.get("/api/workouts", (req, res) => {
+    // return all data from mongodb?
   });
+
+
 };
