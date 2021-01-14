@@ -13,7 +13,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 require("./routes/html-routes.js")(app);
+require("./routes/api-routes.js")(app);
+
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);
 });
+
+// Uniform Resource Identifier (URI) is the ID for the mongoDB database connection info
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/test", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+}).then(() => {
+  console.log('connected to mongoose!')
+});
+
+
