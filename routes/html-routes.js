@@ -13,9 +13,4 @@ module.exports = (app) => {
     res.sendFile(path.join(__dirname, "../public/exercise.html"));
   });
 
-  app.get("/api/workouts", (req, res) => {
-    // return all data from mongodb?
-  });
-
-
 };
