@@ -21,13 +21,13 @@ app.listen(PORT, () => {
 });
 
 // Uniform Resource Identifier (URI) is the ID for the mongoDB database connection info
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/test", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
   useFindAndModify: false,
 }).then(() => {
-  console.log('connected to mongoose!')
+  console.log('connected to DB')
 });
 
 

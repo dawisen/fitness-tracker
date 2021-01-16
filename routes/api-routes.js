@@ -1,16 +1,57 @@
+let mongoose = require("mongoose");
+let Workout = require("../models/workout");
+
 module.exports = (app) => {
   // get endpoint that gets all workouts
-    app.get("/api/workouts", (req, res) => {
-      // call mongo to get all workouts
-      // return as json w/ express
-    });
+  app.get("/api/workouts", (req, res) => {
+    // call mongo to get all workouts
+    Workout.find({})
+      .then((workouts) => {
+        // return as json w/ express
+        res.json(workouts);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+        console.log(err);
+      });
+  });
 
-    app.put("/api/workouts/:id", (req, res) => {
-        // *****add an exercise to a workout*****
-        // get the id paramter so i know what workout to upda
-        // use mongo to call the workout that matches the id
-        // update the excersise array in that workout
+  app.get("/api/workouts/range", (req, res) => {
+    Workout.find({})
+      .then((workouts) => {
+        res.json(workouts);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+        console.log(err);
+      });
+  });
 
-        res.json('ok');
-    })
+  app.post("/api/workouts", (req, res) => {
+    // console.log(req.body);
+    // db.Workout.create(req.body)
+    //   .then((newWorkout) => {
+    //     console.log("NEW WORKOUT", newWorkout);
+    //     res.json(newWorkout);
+    //   })
+    //   .catch((err) => {
+    //     res.status(400).json(err);
+    //   });
+    Workout.create({})
+      .then((dbWorkout) => {
+        res.json(dbWorkout);
+      })
+      .catch((err) => {
+        res.json(err);
+      });
+  });
+
+  app.put("/api/workouts/:id", ({ body, params }, res) => {
+    Workout.findByIdAndUpdate(params.id)
+  } )
+
+  app.delete("/api/workouts", ({ body }, res) => {
+    Workout.findByIdAndDelete(body.id);
+  })
+
 };
