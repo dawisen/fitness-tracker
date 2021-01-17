@@ -43,4 +43,17 @@ const API = {
     return json;
   },
 
+  async deleteWorkout(data) {
+    console.log(data)
+    const id = location.search.split("=")[1];
+    const res = await fetch("/api/workouts/" + id, {
+      method: "DELETE",
+      headers: { "Content-type": "application/json" },
+    });
+    const json = await res.json();
+    return json;
+
+
+  }
+
 };

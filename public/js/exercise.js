@@ -147,6 +147,13 @@ function clearInputs() {
   weightInput.value = "";
 }
 
+function completeButtonSubmit(event) {
+  event.preventDefault();
+  API.deleteWorkout()
+   clearInputs();
+   toast.classList.add("success");
+}
+
 if (workoutTypeSelect) {
   workoutTypeSelect.addEventListener("change", handleWorkoutTypeChange);
 }

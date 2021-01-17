@@ -60,8 +60,17 @@ module.exports = (app) => {
     )
   } )
 
-  // app.delete("/api/workouts", ({ body }, res) => {
-  //   Workout.findByIdAndDelete(body.id);
-  // })
+  app.delete("/api/workouts/:id", ({ body, params }, res) => {
+     let workoutID = params.id;
+     console.log("body", body);
+     console.log("the id to delete is: ", params.id);
+     Workout.findByIdAndDelete({ _id: `${workoutID}` }, (err, result) => {
+       if (err) {
+         res.send(err);
+       } else {
+         res.send(result);
+       }
+     });
+  })
 
 };
