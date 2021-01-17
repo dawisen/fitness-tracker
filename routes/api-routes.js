@@ -28,29 +28,37 @@ module.exports = (app) => {
   });
 
   app.post("/api/workouts", (req, res) => {
-    if (req.body.name === undefined) {
-      console.log("ERROR: response is undefined");
-      res.sendStatus(400);
-    } else {
-      var newWorkoutinDB = [{
+
+      var workoutToCreate = [{
         exercises: [ req.body ]
       }]
       console.log("THIS IS THE REQ.BODY", JSON.stringify(req.body));
-      console.log("newWorkoutinDB", JSON.stringify(newWorkoutinDB));
-      Workout.create(newWorkoutinDB)
+      console.log("workoutToCreate", JSON.stringify(workoutToCreate));
+      Workout.create(workoutToCreate)
         .then((dbWorkout) => {
           res.json(dbWorkout);
         })
         .catch((err) => {
           console.log(err)
         });
-      
-    };
   });
 
-  // app.put("/api/workouts/:id", ({ body, params }, res) => {
-  //   Workout.findByIdAndUpdate(params.id)
-  // } )
+  app.put("/api/workouts/:id", ({ body, params }, res) => {
+    let workoutID = params.id;
+    console.log('body', body)
+    console.log('the id to update is: ', params.id)
+    Workout.findByIdAndUpdate(
+      { _id: `${workoutID}` },
+      { exercises: body },
+      (err, result) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(result);
+        }
+      }
+    )
+  } )
 
   // app.delete("/api/workouts", ({ body }, res) => {
   //   Workout.findByIdAndDelete(body.id);

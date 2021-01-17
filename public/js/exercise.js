@@ -17,23 +17,23 @@ const newWorkout = document.querySelector(".new-workout")
 let workoutType = null;
 let shouldNavigateAway = false;
 
-async function initExercise() {
-  let workout;
+// async function initExercise() {
+//   let workout;
 
   // if there is no ID in the URL, create a new workout
   // else, the ID will be used to update the matching workout
-  if (location.search.split("=")[1] === undefined) {
-    workout = await API.createWorkout()
-    console.log("this is the workout", workout)
-  }
+  // if (location.search.split("=")[1] === undefined) {
+  //   workout = await API.createWorkout()
+  //   console.log("this is the workout", workout)
+  // }
 
-  if (workout) {
-    location.search = "?id=" + workout._id;
-  }
+//   if (workout) {
+//     location.search = "?id=" + workout._id;
+//   }
 
-}
+// }
 
-initExercise();
+// initExercise();
 
 function handleWorkoutTypeChange(event) {
   workoutType = event.target.value;
@@ -98,10 +98,13 @@ function validateInputs() {
   }
 }
 
-function handleFormSubmit(event) {
+function workoutSubmit(event) {
   event.preventDefault();
-
+  let workout;
   let workoutData = {};
+  if (workout) {
+    location.search = "?id=" + workout._id;
+  }
 
   if (workoutType === "cardio") {
     workoutData.type = "cardio";
@@ -117,7 +120,11 @@ function handleFormSubmit(event) {
     workoutData.duration = Number(resistanceDurationInput.value.trim());
   }
   console.log("handleFormSubmit func data", workoutData)
-  API.createWorkout(workoutData);
+  if (location.search.split("=")[1] === undefined) {
+    API.createWorkout(workoutData);
+  } else {
+    API.updateExercise(workoutData)
+  }
   clearInputs();
   toast.classList.add("success");
 }
@@ -146,12 +153,11 @@ if (workoutTypeSelect) {
 
 completeButton.addEventListener("click", function (event) {
   shouldNavigateAway = true;
-  handleFormSubmit(event);
+  completeButtonSubmit(event);
 });
 
 
-addButton.addEventListener("click", handleFormSubmit);
-
+addButton.addEventListener("click", workoutSubmit);
 toast.addEventListener("animationend", handleToastAnimationEnd);
 
 document
