@@ -28,30 +28,32 @@ module.exports = (app) => {
   });
 
   app.post("/api/workouts", (req, res) => {
-    // console.log(req.body);
-    // db.Workout.create(req.body)
-    //   .then((newWorkout) => {
-    //     console.log("NEW WORKOUT", newWorkout);
-    //     res.json(newWorkout);
-    //   })
-    //   .catch((err) => {
-    //     res.status(400).json(err);
-    //   });
-    Workout.create({})
-      .then((dbWorkout) => {
-        res.json(dbWorkout);
-      })
-      .catch((err) => {
-        res.json(err);
-      });
+    if (req.body.name === undefined) {
+      console.log("ERROR: response is undefined");
+      res.sendStatus(400);
+    } else {
+      var newWorkoutinDB = [{
+        exercises: [ req.body ]
+      }]
+      console.log("THIS IS THE REQ.BODY", JSON.stringify(req.body));
+      console.log("newWorkoutinDB", JSON.stringify(newWorkoutinDB));
+      Workout.create(newWorkoutinDB)
+        .then((dbWorkout) => {
+          res.json(dbWorkout);
+        })
+        .catch((err) => {
+          console.log(err)
+        });
+      
+    };
   });
 
-  app.put("/api/workouts/:id", ({ body, params }, res) => {
-    Workout.findByIdAndUpdate(params.id)
-  } )
+  // app.put("/api/workouts/:id", ({ body, params }, res) => {
+  //   Workout.findByIdAndUpdate(params.id)
+  // } )
 
-  app.delete("/api/workouts", ({ body }, res) => {
-    Workout.findByIdAndDelete(body.id);
-  })
+  // app.delete("/api/workouts", ({ body }, res) => {
+  //   Workout.findByIdAndDelete(body.id);
+  // })
 
 };

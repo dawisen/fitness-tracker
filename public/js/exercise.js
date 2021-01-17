@@ -20,6 +20,8 @@ let shouldNavigateAway = false;
 async function initExercise() {
   let workout;
 
+  // if there is no ID in the URL, create a new workout
+  // else, the ID will be used to update the matching workout
   if (location.search.split("=")[1] === undefined) {
     workout = await API.createWorkout()
     console.log("this is the workout", workout)
@@ -96,7 +98,7 @@ function validateInputs() {
   }
 }
 
-async function handleFormSubmit(event) {
+function handleFormSubmit(event) {
   event.preventDefault();
 
   let workoutData = {};
@@ -114,8 +116,8 @@ async function handleFormSubmit(event) {
     workoutData.reps = Number(repsInput.value.trim());
     workoutData.duration = Number(resistanceDurationInput.value.trim());
   }
-  console.log("THIS IS THE WORKOUT SUBMITTED", workoutData);
-  await API.addExercise(workoutData);
+  console.log("handleFormSubmit func data", workoutData)
+  API.createWorkout(workoutData);
   clearInputs();
   toast.classList.add("success");
 }
@@ -141,15 +143,15 @@ function clearInputs() {
 if (workoutTypeSelect) {
   workoutTypeSelect.addEventListener("change", handleWorkoutTypeChange);
 }
-if (completeButton) {
-  completeButton.addEventListener("click", function (event) {
-    shouldNavigateAway = true;
-    handleFormSubmit(event);
-  });
-}
-if (addButton) {
-  addButton.addEventListener("click", handleFormSubmit);
-}
+
+completeButton.addEventListener("click", function (event) {
+  shouldNavigateAway = true;
+  handleFormSubmit(event);
+});
+
+
+addButton.addEventListener("click", handleFormSubmit);
+
 toast.addEventListener("animationend", handleToastAnimationEnd);
 
 document
